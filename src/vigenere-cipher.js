@@ -1,75 +1,116 @@
 const CustomError = require("../extensions/custom-error");
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const characters = [
-  ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'],
-  ['B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A'],
-  ['C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B'],
-  ['D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C'],
-  ['E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D'],
-  ['F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E'],
-  ['G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F'],
-  ['H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G'],
-  ['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'],
-  ['J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'],
-  ['K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'],
-  ['L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K'],
-  ['M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'],
-  ['N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M'],
-  ['O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N'],
-  ['P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'],
-  ['Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'],
-  ['R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q'],
-  ['S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R'],
-  ['T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S'],
-  ['U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T'],
-  ['V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U'],
-  ['W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V'],
-  ['X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W'],
-  ['Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X'],
-  ['Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y']  
-];
-
-const START_POSITION = 65;
 
 class VigenereCipheringMachine {
+
+  constructor(isDirect = true) {
+    this.reverseStr = !isDirect;
+  }
+
   encrypt(message, key) {
     if (message === undefined || key === undefined) {
       throw new Error('not enough parameters');
     }
 
-    const messageUpper = message.toUpperCase();
-    const messageTrimmed = messageUpper.trim();
+    let keyString = '';
+    let result = '';
+    let code = 0;
 
-    const keyUpper = key.toUpperCase();
-    const keyTrimmed = keyUpper.replace(/\s/g, '');
+    let messageUp = message.toUpperCase();
+    let keyUp = key.toUpperCase();
 
-    let result = "";
-    let keyLength = keyTrimmed.length;
-    
-    for (let it = 0, n = 0; it < messageTrimmed.length; it+=1, n+=1) {
+    let keyLength = key.length;
+    let it = 0;
+
+    for (let i = 0; i < message.length; i++) {
+      if (message[i] === ' ') {
+        keyString += message[i];
+        continue; 
+        }
       
-      let symbol = messageTrimmed[it];
-      
+      if (it % keyLength === 0) {
+        it = 0;
+      }
+      keyString += keyUp[it];
+      it++;
+    }
+
+    for (let i = 0; i < message.length; i++) {
+      let symbol = messageUp[i];
+          
       if (!symbol.match(/[A-Z]/)) {
         result += symbol;
-        n--;
         continue;
       }
       
-      const symbolCharCode = symbol.charCodeAt(0);
-
-      let i = keyTrimmed.charCodeAt(n % keyLength) - START_POSITION;
-      let j = symbolCharCode - START_POSITION;
-      result += characters[i][j];
+      let symbolCode = alphabet.indexOf(symbol);
       
-  }
+      let keyCode = alphabet.indexOf(keyString[i]);
+      
+      let codeSum = symbolCode + keyCode;
+      
+      code =  codeSum % 26;
+     
+      result += alphabet[code];
+    }
+
+    if (this.reverseStr === true) {
+      return result.split('').reverse().join('');
+    }
+
     return result;
   }    
   decrypt(encryptedMessage, key) {
     if (encryptedMessage === undefined || key === undefined) {
       throw new Error('not enough parameters');
     }
+
+    let keyString = '';
+    let result = '';
+    let code = 0;
+    let messageUp = encryptedMessage.toUpperCase();
+    let keyUp = key.toUpperCase();
+    let keyLength = key.length;
+    let it = 0;
+
+    for (let i = 0; i < encryptedMessage.length; i++) {
+      if (encryptedMessage[i] === ' ') {
+        keyString += encryptedMessage[i];
+        continue; 
+        }
+      
+      if (it % keyLength === 0) {
+        it = 0;
+      }
+      keyString += keyUp[it];
+      it++;
+    }
+
+    for (let i = 0; i < encryptedMessage.length; i++) {
+      let symbol = messageUp[i];
+          
+      if (!symbol.match(/[A-Z]/)) {
+        result += symbol;
+        continue;
+      }
+      
+      let symbolCode = alphabet.indexOf(symbol);
+      let keyCode = alphabet.indexOf(keyString[i]);
+      let codeDiff = symbolCode - keyCode;
+      
+      if (codeDiff < 0) {
+        code = symbolCode + 26 - keyCode;
+      } else {
+        code =  codeDiff % 26;
+      }
+      result += alphabet[code];
+    }
+
+    if (this.reverseStr === true) {
+      return result.split('').reverse().join('');
+    }
+    
     return result;
   }
 }
